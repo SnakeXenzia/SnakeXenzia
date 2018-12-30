@@ -30,6 +30,7 @@ public class GameScreen extends JPanel implements Runnable {
 	public void run() {
 		long t2 = 0;
 		while(true) {
+
 			if(System.currentTimeMillis()-t2>500) {
 				enableTextStartGame=!enableTextStartGame;
 				t2 = System.currentTimeMillis();
@@ -76,6 +77,16 @@ public class GameScreen extends JPanel implements Runnable {
 			}
 		
 		}
+	}
+	public void paintBg( Graphics g) {
+		g.setColor(Color.gray);
+		for(int i = 0; i < 20; i++)
+			for(int j = 0; j < 20; j++) 
+				g.fillRect(i*20 + 1, j*20 + 1, 18, 18);
+	}
+	public void paint(Graphics g) {
+		paintBg(g);
+		snake.veSnake(g);
 	}
 }
 
