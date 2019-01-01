@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -37,7 +38,6 @@ public class Snake {
 		}
 		
 	}
-
 	public boolean toaDoCoNamTrongThanRan(int x1, int y1) {
 		for ( int i =0; i<doDai;i++)
 			if(x[i]==x1&&y[i]==y1) return true;
