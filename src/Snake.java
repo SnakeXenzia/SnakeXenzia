@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -18,6 +17,14 @@ public class Snake {
 	
 	int vecto = Snake.GO_DOWN;
 	long t1 = 0;
+	long t2 = 0;
+	
+	int speed =200;
+	
+	int maxLen = 10;
+	
+	int currentImage = 0;
+	
 	public Snake() {
 		x = new int[20];
 		y = new int[20];
@@ -32,12 +39,29 @@ public class Snake {
 		y[2] = 2;
 		
 	}
+	public void resetGame() {
+		x = new int[20];
+		y = new int[20];
+		
+		x[0]=5;
+		y[0]=4;
+		
+		x[1] = 5;
+		y[1] = 3;
+		
+		x[2] = 5;
+		y[2] = 2;
+		
+		doDai = 3;
+		
+	}
 	public void setVecto(int v) {
 		if (vecto != -v) {
 			vecto = v;
 		}
 		
 	}
+
 	public boolean toaDoCoNamTrongThanRan(int x1, int y1) {
 		for ( int i =0; i<doDai;i++)
 			if(x[i]==x1&&y[i]==y1) return true;
@@ -55,16 +79,41 @@ public class Snake {
 		return new Point(x, y);
 		
 	}
+
 	public void update() {
 		
+		if(doDai == maxLen) {
+			GameScreen.isPlaying=false;
+			resetGame();
+			speed=(int) (speed*0.8);
+		}
+		for (int i=2; i<doDai; i++) {
+			if(x[0]==x[i] && y[0]==y[i]) {
+				GameScreen.isPlaying= false;
+				GameScreen.isGameOver = true;
+				resetGame();
+			}
+		}
+		
+		if(System.currentTimeMillis()-t2>150) {
+			Data.HeadGoUp.update();
+			Data.HeadGoDown.update();
+			Data.HeadGoRight.update();
+			Data.HeadGoLeft.update();
+
+			t2 = System.currentTimeMillis();
+		}
 		
 		
-		if(System.currentTimeMillis()-t1>500) {
+		if(System.currentTimeMillis()-t1> speed) {
+			
+			
 			if(GameScreen.bg[x[0]][y[0]]==2) {
 				doDai++;
 				GameScreen.bg[x[0]][y[0]]=0;
 				GameScreen.bg[layToaDoMoi().x][layToaDoMoi().y]=2;
 			}
+			
 			for (int i = doDai -1; i > 0; i--) {
 				x[i] = x[i-1];
 				y[i] = y[i-1];
@@ -85,6 +134,11 @@ public class Snake {
 	public void veSnake(Graphics g) {
 		g.setColor(Color.red);
 		for(int i=0; i<doDai;i++)
-			g.fillRect(x[i]*20+1, y[i]*20+1, 18, 18);
+			g.drawImage(Data.imageBody, x[i]*20+GameScreen.padding, y[i]*20+GameScreen.padding, null);
+		if(vecto==Snake.GO_UP) g.drawImage(Data.HeadGoUp.getCurrentImage(), x[0]*20+GameScreen.padding, y[0]*20+GameScreen.padding, null);
+		else if(vecto==Snake.GO_DOWN) g.drawImage(Data.HeadGoDown.getCurrentImage(), x[0]*20+GameScreen.padding, y[0]*20+GameScreen.padding, null);
+		else if(vecto==Snake.GO_RIGHT) g.drawImage(Data.HeadGoRight.getCurrentImage(), x[0]*20+GameScreen.padding, y[0]*20+GameScreen.padding, null);
+		else if(vecto==Snake.GO_LEFT) g.drawImage(Data.HeadGoLeft.getCurrentImage(), x[0]*20+GameScreen.padding, y[0]*20+GameScreen.padding, null);
 	}
 }
+

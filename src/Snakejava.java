@@ -26,6 +26,14 @@ public class Snakejava extends JFrame {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			//System.out.println("key is pressed");
+			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+				GameScreen.isPlaying=!GameScreen.isPlaying;
+				if(GameScreen.isGameOver) {
+					GameScreen.isGameOver=false;
+					game.snake.resetGame();
+				}
+			}
+			
 			if(e.getKeyCode() == KeyEvent.VK_UP) {
 				game.snake.setVecto(Snake.GO_UP);
 			}
