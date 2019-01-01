@@ -18,6 +18,10 @@ public class Snake {
 	
 	int vecto = Snake.GO_DOWN;
 	long t1 = 0;
+	long t2 = 0;
+	
+	int currentImage = 0;
+	
 	public Snake() {
 		x = new int[20];
 		y = new int[20];
@@ -38,6 +42,7 @@ public class Snake {
 		}
 		
 	}
+
 	public boolean toaDoCoNamTrongThanRan(int x1, int y1) {
 		for ( int i =0; i<doDai;i++)
 			if(x[i]==x1&&y[i]==y1) return true;
@@ -58,10 +63,19 @@ public class Snake {
 
 	public void update() {
 		
-		
-		
-		if(System.currentTimeMillis()-t1>500) {
+		if(System.currentTimeMillis()-t2>150) {
+			Data.HeadGoUp.update();
+			Data.HeadGoDown.update();
+			Data.HeadGoRight.update();
+			Data.HeadGoLeft.update();
 
+			t2 = System.currentTimeMillis();
+		}
+		
+		
+		if(System.currentTimeMillis()-t1>200) {
+			
+			
 			if(GameScreen.bg[x[0]][y[0]]==2) {
 				doDai++;
 				GameScreen.bg[x[0]][y[0]]=0;
@@ -88,12 +102,11 @@ public class Snake {
 	public void veSnake(Graphics g) {
 		g.setColor(Color.red);
 		for(int i=0; i<doDai;i++)
-			g.fillRect(x[i]*20+1, y[i]*20+1, 18, 18);
-
-		for(int i=1; i<doDai;i++)
-			g.drawImage(Data.imageBody, x[i]*20, y[i]*20, null);
-		g.drawImage(Data.imageHead, x[0]*20+1, y[0]*20+1, null);
-		
+			g.drawImage(Data.imageBody, x[i]*20+GameScreen.padding, y[i]*20+GameScreen.padding, null);
+		if(vecto==Snake.GO_UP) g.drawImage(Data.HeadGoUp.getCurrentImage(), x[0]*20+GameScreen.padding, y[0]*20+GameScreen.padding, null);
+		else if(vecto==Snake.GO_DOWN) g.drawImage(Data.HeadGoDown.getCurrentImage(), x[0]*20+GameScreen.padding, y[0]*20+GameScreen.padding, null);
+		else if(vecto==Snake.GO_RIGHT) g.drawImage(Data.HeadGoRight.getCurrentImage(), x[0]*20+GameScreen.padding, y[0]*20+GameScreen.padding, null);
+		else if(vecto==Snake.GO_LEFT) g.drawImage(Data.HeadGoLeft.getCurrentImage(), x[0]*20+GameScreen.padding, y[0]*20+GameScreen.padding, null);
 	}
 }
 
