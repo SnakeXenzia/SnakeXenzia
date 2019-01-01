@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -20,6 +19,10 @@ public class Snake {
 	long t1 = 0;
 	long t2 = 0;
 	
+	int speed =200;
+	
+	int maxLen = 10;
+	
 	int currentImage = 0;
 	
 	public Snake() {
@@ -34,6 +37,22 @@ public class Snake {
 		
 		x[2] = 5;
 		y[2] = 2;
+		
+	}
+	public void resetGame() {
+		x = new int[20];
+		y = new int[20];
+		
+		x[0]=5;
+		y[0]=4;
+		
+		x[1] = 5;
+		y[1] = 3;
+		
+		x[2] = 5;
+		y[2] = 2;
+		
+		doDai = 3;
 		
 	}
 	public void setVecto(int v) {
@@ -63,6 +82,19 @@ public class Snake {
 
 	public void update() {
 		
+		if(doDai == maxLen) {
+			GameScreen.isPlaying=false;
+			resetGame();
+			speed=(int) (speed*0.8);
+		}
+		for (int i=2; i<doDai; i++) {
+			if(x[0]==x[i] && y[0]==y[i]) {
+				GameScreen.isPlaying= false;
+				GameScreen.isGameOver = true;
+				resetGame();
+			}
+		}
+		
 		if(System.currentTimeMillis()-t2>150) {
 			Data.HeadGoUp.update();
 			Data.HeadGoDown.update();
@@ -73,7 +105,7 @@ public class Snake {
 		}
 		
 		
-		if(System.currentTimeMillis()-t1>200) {
+		if(System.currentTimeMillis()-t1> speed) {
 			
 			
 			if(GameScreen.bg[x[0]][y[0]]==2) {

@@ -1,5 +1,3 @@
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 import static java.lang.Thread.sleep;
@@ -19,6 +17,8 @@ public class GameScreen extends JPanel implements Runnable {
 	Snake snake;
 	
 	Thread thread;
+	
+	static boolean isGameOver = false;
 	public GameScreen() {
 		snake = new Snake();
 		Data.loadImage();
@@ -32,7 +32,6 @@ public class GameScreen extends JPanel implements Runnable {
 	public void run() {
 		long t2 = 0;
 		while(true) {
-
 			if(System.currentTimeMillis()-t2>500) {
 				enableTextStartGame=!enableTextStartGame;
 				t2 = System.currentTimeMillis();
@@ -79,30 +78,12 @@ public class GameScreen extends JPanel implements Runnable {
 			}
 		
 		}
-	}
-	public void paintBg( Graphics g) {
-		g.setColor(Color.gray);
-		for(int i = 0; i < 20; i++)
-			for(int j = 0; j < 20; j++) {
-				g.fillRect(i*20 + 1, j*20 + 1, 18, 18);
-			if(bg [i][j]==2) {
-				g.setColor(Color.red);
-				g.fillRect(i*20 + 1, j*20 + 1, 18, 18);
+		if(isGameOver) {
+				g.setColor(Color.LIGHT_GRAY);
+				g.setFont(g.getFont().deriveFont(28.0f));
+				g.drawString("GAME OVER", 150, 300);
+			}
+			
+		}
 		
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 400, 400);
-		for(int i = 0; i < 20; i++)
-			for(int j = 0; j < 20; j++) {
-				//g.fillRect(i*20 + 1, j*20 + 1, 18, 18);
-			if(bg [i][j]==2) {
-				g.drawImage(Data.imageLayBug, i*20+1, j*20+1, null);
-			}
-			}
-
 	}
-	public void paint(Graphics g) {
-		paintBg(g);
-		snake.veSnake(g);
-	}
-}
-

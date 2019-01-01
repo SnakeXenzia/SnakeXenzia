@@ -28,6 +28,10 @@ public class Snakejava extends JFrame {
 			//System.out.println("key is pressed");
 			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 				GameScreen.isPlaying=!GameScreen.isPlaying;
+				if(GameScreen.isGameOver) {
+					GameScreen.isGameOver=false;
+					game.snake.resetGame();
+				}
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_UP) {
