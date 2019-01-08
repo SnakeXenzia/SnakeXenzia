@@ -3,6 +3,8 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import org.omg.CORBA.Current;
 
 public class Snake {
@@ -23,6 +25,8 @@ public class Snake {
 	
 	int maxLen = 10;
 	
+	boolean udAfterChangeVt = true;
+	
 	int currentImage = 0;
 	
 	public Snake() {
@@ -40,8 +44,8 @@ public class Snake {
 		
 	}
 	public void resetGame() {
-		x = new int[20];
-		y = new int[20];
+		x = new int[100];
+		y = new int[100];
 		
 		x[0]=5;
 		y[0]=4;
@@ -53,11 +57,13 @@ public class Snake {
 		y[2] = 2;
 		
 		doDai = 3;
+		vecto = Snake.GO_DOWN;
 		
 	}
 	public void setVecto(int v) {
-		if (vecto != -v) {
+		if (vecto != -v && udAfterChangeVt) {
 			vecto = v;
+			udAfterChangeVt = false;
 		}
 		
 	}
@@ -79,23 +85,43 @@ public class Snake {
 		return new Point(x, y);
 		
 	}
-
+	
+	public int getCurrentSpeed() {
+		for (int i = 0; i < GameScreen.CurrentLevel ; i++) {
+			speed*=0.8;
+		}
+		return speed;
+	}
+	
 	public void update() {
 		
 		if(doDai == maxLen) {
 			GameScreen.isPlaying=false;
 			resetGame();
-			speed=(int) (speed*0.8);
+			GameScreen.CurrentLevel++;
+			maxLen += 5;
+			speed = getCurrentSpeed();
+			
 		}
 		for (int i=2; i<doDai; i++) {
 			if(x[0]==x[i] && y[0]==y[i]) {
+				
+				String name = JOptionPane.showInputDialog("Hay nhap ten cua ban");
+				Snakejava.users.add(new User(name, String.valueOf(GameScreen.CurrentLevel)));
+				
 				GameScreen.isPlaying= false;
 				GameScreen.isGameOver = true;
+				
+				GameScreen.diem = 0;
+				GameScreen.CurrentLevel = 1;
 				resetGame();
+				
 			}
 		}
 		
-		if(System.currentTimeMillis()-t2>150) {
+		if(System.currentTimeMillis()-t2>200) {
+			
+			udAfterChangeVt = true;
 			Data.HeadGoUp.update();
 			Data.HeadGoDown.update();
 			Data.HeadGoRight.update();
@@ -112,6 +138,7 @@ public class Snake {
 				doDai++;
 				GameScreen.bg[x[0]][y[0]]=0;
 				GameScreen.bg[layToaDoMoi().x][layToaDoMoi().y]=2;
+				GameScreen.diem+=100;
 			}
 			
 			for (int i = doDai -1; i > 0; i--) {

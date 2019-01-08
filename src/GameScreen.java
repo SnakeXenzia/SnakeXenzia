@@ -18,6 +18,9 @@ public class GameScreen extends JPanel implements Runnable {
 	
 	Thread thread;
 	
+	static int CurrentLevel = 1;
+	static int diem = 0;
+	
 	static boolean isGameOver = false;
 	public GameScreen() {
 		snake = new Snake();
@@ -49,7 +52,7 @@ public class GameScreen extends JPanel implements Runnable {
 	public void paintBg( Graphics g) {
 		
 		g.setColor(Color.black);
-		g.fillRect(0, 0, WIDTH+padding*2, HEIGHT+padding*2);
+		g.fillRect(0, 0, WIDTH+padding*2+280, HEIGHT+padding*2);
 		for(int i = 0; i < 20; i++)
 			for(int j = 0; j < 20; j++) {
 				//g.fillRect(i*20 + 1, j*20 + 1, 18, 18);
@@ -64,6 +67,10 @@ public class GameScreen extends JPanel implements Runnable {
 		g.drawRect(0, 0, WIDTH+padding*2, HEIGHT+padding*2);
 		g.drawRect(1, 1, WIDTH+padding*2-2, HEIGHT+padding*2-2);
 		g.drawRect(2, 2, WIDTH+padding*2-4, HEIGHT+padding*2-4);
+	
+		g.drawRect(0, 0, WIDTH+padding*2+280, HEIGHT+padding*2);
+		g.drawRect(1, 1, WIDTH+padding*2-2+280, HEIGHT+padding*2-2);
+		g.drawRect(2, 2, WIDTH+padding*2-4+280, HEIGHT+padding*2-4);
 	}
 	public void paint(Graphics g) {
 		paintBg(g);
@@ -83,7 +90,18 @@ public class GameScreen extends JPanel implements Runnable {
 				g.setFont(g.getFont().deriveFont(28.0f));
 				g.drawString("GAME OVER", 150, 300);
 			}
-			
+		g.setColor(Color.LIGHT_GRAY);
+		g.setFont(g.getFont().deriveFont(28.0f));
+		g.drawString("LEVEL: "+CurrentLevel, 450, 100);	
+		
+		g.setFont(g.getFont().deriveFont(20.0f));
+		g.drawString("Diem: "+diem, 450, 150);
+		
+		for (int i = 0; i < Snakejava.users.size(); i++) {
+			g.drawString(Snakejava.users.get(i).toString(), 450, i*30 + 200);
 		}
+	}
 		
 	}
+
+
