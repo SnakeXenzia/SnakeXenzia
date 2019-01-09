@@ -8,4 +8,9 @@
   + Ban đầu con rắn rất ngăn, nhưng cứ mỗi khi ăn 1 viên, con rắn sẽ dài ra thêm 1 chút, và càng ăn được nhiều viên thì điểm số lại càng tăng cao.
   + Trò chơi kết thúc khi người chơi lúng túng để đầu rắn chạm vào thân mình.
 # 3) Công nghệ sử dụng:
-- Công nghệ: ngôn ngữ lập trình Java ( dùng phần mềm Eclipse), có sử dụng JavaSwing để tạo giao diện.
+- Công nghệ: ngôn ngữ lập trình Java ( dùng phần mềm Eclipse).
+- Link download:
+  + JDK: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+  + JRE: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+  + Eclipse: https://www.eclipse.org/downloads/ 
+  + Junit: https://github.com/junit-team/junit4/releases/tag/r4.12
